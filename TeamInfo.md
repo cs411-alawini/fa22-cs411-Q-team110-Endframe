@@ -8,11 +8,11 @@
 | TeamName    |         Endframe       |
 | Captain     |      Placeholder       |
 | Captain     |  mcsong2@illinois.edu  |
-| Member1     |      Placeholder       |
+| Member1     |      Sinja Sanandan    |
 | Member1     | sinjass2@illinois.edu  |
-| Member2     |      Placeholder       |
+| Member2     |   Siddharth Salunkhe   |
 | Member2     |   ss190@illinois.edu   |
-| Member3     |      Placeholder       |
+| Member3     |      Vedan Malhotra    |
 | Member3     |  vedanm2@illinois.edu  |
 
 ## Project Information
