@@ -6,7 +6,7 @@
 | ----------- | ---------------------- |
 | TeamID      |        Team-110        |
 | TeamName    |         Endframe       |
-| Captain     |      Placeholder       |
+| Captain     |        Max Song        |
 | Captain     |  mcsong2@illinois.edu  |
 | Member1     |      Sinja Sanandan    |
 | Member1     | sinjass2@illinois.edu  |
