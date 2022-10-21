@@ -1,0 +1,71 @@
+
+USE triviattack;
+
+CREATE TABLE IF NOT EXISTS team (
+	teamID INT NOT NULL,
+	teamName VARCHAR(20),
+	PRIMARY KEY(teamID)
+);
+CREATE TABLE IF NOT EXISTS user (
+	userID INT NOT NULL,
+	password VARCHAR(30) NOT NULL,
+	Username VARCHAR(30) NOT NULL,
+	profilePicURL VARCHAR(2083),
+	PRIMARY KEY(userID)
+);
+CREATE TABLE IF NOT EXISTS teamMembership (
+	teamID INT NOT NULL,
+	userID INT NOT NULL,
+	PRIMARY KEY(teamID, userID),
+	FOREIGN KEY (teamID) REFERENCES team(teamID)
+ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES user(userID)
+ON UPDATE CASCADE ON DELETE CASCADE
+
+);
+CREATE TABLE IF NOT EXISTS quiz (
+	quizID INT NOT NULL,
+	PRIMARY KEY(quizID)
+);
+
+CREATE TABLE IF NOT EXISTS question(
+	questionID INT NOT NULL,
+	answer TEXT,
+	questionText TEXT,
+	subcategory VARCHAR(30),
+	category VARCHAR(30),
+	difficulty VARCHAR(25),
+	PRIMARY KEY(questionID)
+);
+
+CREATE TABLE IF NOT EXISTS quizQuestions(
+	quizID INT NOT NULL,
+	questionID INT NOT NULL,
+	PRIMARY KEY(quizID, questionID),
+    FOREIGN KEY (quizID) REFERENCES quiz(quizID) 
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (questionID) REFERENCES question(questionID) 
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE IF NOT EXISTS response (
+	responseID INT NOT NULL,
+	isCorrect BIT,
+	Date DATE,
+	quizID INT NOT NULL,
+	questionID INT NOT NULL,
+	userID INT NOT NULL,
+	PRIMARY KEY(userID, quizID, questionID),
+    FOREIGN KEY (quizID) REFERENCES quiz(quizID)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES user(userID)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (questionID) REFERENCES question(questionID)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+
+

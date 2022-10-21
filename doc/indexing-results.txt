@@ -1,0 +1,108 @@
+Explain Analyze Query 1
+('-> Sort: t.teamName, u.Username  (actual time=0.201..0.202 rows=15 loops=1)\n    
+-> Table scan on <temporary>  (cost=0.23..2.64 rows=11) (actual time=0.001..0.002 rows=15 loops=1)\n        
+-> Temporary table with deduplication  (cost=8.14..10.54 rows=11) (actual time=0.178..0.180 rows=15 loops=1)\n            
+-> Nested loop inner join  (cost=6.77 rows=11) (actual time=0.046..0.095 rows=15 loops=1)\n                
+-> Nested loop inner join  (cost=2.79 rows=11) (actual time=0.039..0.055 rows=15 loops=1)\n                    
+-> Nested loop inner join  (cost=1.15 rows=2) (actual time=0.031..0.037 rows=2 loops=1)\n                
+-> Index lookup on m1 using userID (userID=6)  (cost=0.45 rows=2) (actual time=0.019..0.020 rows=2 loops=1)\n    
+-> Single-row index lookup on t using PRIMARY (teamID=m1.teamID)  (cost=0.30 rows=1) (actual time=0.007..0.008 rows=1 loops=2)\n
+-> Index lookup on m using PRIMARY (teamID=m1.teamID)  (cost=0.54 rows=6) (actual time=0.006..0.008 rows=8 loops=2)\n       
+-> Single-row index lookup on u using PRIMARY (userID=m.userID)  (cost=0.26 rows=1) (actual time=0.002..0.002 rows=1 loops=15)\n',)
+
+('-> Sort: t.teamName, u.Username  (actual time=0.282..0.283 rows=15 loops=1)\n    
+-> Table scan on <temporary>  (cost=0.23..2.64 rows=11) (actual time=0.001..0.003 rows=15 loops=1)\n        
+-> Temporary table with deduplication  (cost=8.14..10.54 rows=11) (actual time=0.256..0.259 rows=15 loops=1)\n            
+-> Nested loop inner join  (cost=6.77 rows=11) (actual time=0.042..0.213 rows=15 loops=1)\n                
+-> Nested loop inner join  (cost=2.79 rows=11) (actual time=0.036..0.175 rows=15 loops=1)\n                    
+-> Nested loop inner join  (cost=1.15 rows=2) (actual time=0.028..0.034 rows=2 loops=1)\n                        
+-> Index lookup on m1 using userID (userID=6)  (cost=0.45 rows=2) (actual time=0.019..0.020 rows=2 loops=1)\n                        
+-> Single-row index lookup on t using PRIMARY (teamID=m1.teamID)  (cost=0.30 rows=1) (actual time=0.006..0.006 rows=1 loops=2)\n
+-> Index lookup on m using PRIMARY (teamID=m1.teamID)  (cost=0.54 rows=6) (actual time=0.067..0.070 rows=8 loops=2)\n                
+-> Single-row index lookup on u using PRIMARY (userID=m.userID)  (cost=0.26 rows=1) (actual time=0.002..0.002 rows=1 loops=15)\n',)
+
+('-> Sort: t.teamName, u.Username  (actual time=0.138..0.139 rows=15 loops=1)\n    
+-> Table scan on <temporary>  (cost=0.23..2.64 rows=11) (actual time=0.001..0.003 rows=15 loops=1)\n        
+-> Temporary table with deduplication  (cost=8.14..10.54 rows=11) (actual time=0.115..0.118 rows=15 loops=1)\n            
+-> Nested loop inner join  (cost=6.77 rows=11) (actual time=0.038..0.081 rows=15 loops=1)\n                
+-> Nested loop inner join  (cost=2.79 rows=11) (actual time=0.032..0.047 rows=15 loops=1)\n                    
+-> Nested loop inner join  (cost=1.15 rows=2) (actual time=0.026..0.031 rows=2 loops=1)\n                        
+-> Index lookup on m1 using userID (userID=6)  (cost=0.45 rows=2) (actual time=0.017..0.018 rows=2 loops=1)\n                        
+-> Single-row index lookup on t using PRIMARY (teamID=m1.teamID)  (cost=0.30 rows=1) (actual time=0.006..0.006 rows=1 loops=2)\n
+-> Index lookup on m using PRIMARY (teamID=m1.teamID)  (cost=0.54 rows=6) (actual time=0.005..0.007 rows=8 loops=2)\n                
+-> Single-row index lookup on u using PRIMARY (userID=m.userID)  (cost=0.26 rows=1) (actual time=0.002..0.002 rows=1 loops=15)\n',)
+
+
+('-> Sort: t.teamName, u.Username  (actual time=0.174..0.175 rows=15 loops=1)\n    
+-> Table scan on <temporary>  (cost=0.23..2.64 rows=11) (actual time=0.001..0.002 rows=15 loops=1)\n        
+-> Temporary table with deduplication  (cost=8.14..10.54 rows=11) (actual time=0.144..0.147 rows=15 loops=1)\n            
+-> Nested loop inner join  (cost=6.77 rows=11) (actual time=0.048..0.105 rows=15 loops=1)\n                
+-> Nested loop inner join  (cost=2.79 rows=11) (actual time=0.041..0.058 rows=15 loops=1)\n                    
+-> Nested loop inner join  (cost=1.15 rows=2) (actual time=0.032..0.038 rows=2 loops=1)\n                        
+-> Index lookup on m1 using userID (userID=6)  (cost=0.45 rows=2) (actual time=0.019..0.020 rows=2 loops=1)\n  
+-> Single-row index lookup on t using PRIMARY (teamID=m1.teamID)  (cost=0.30 rows=1) (actual time=0.008..0.008 rows=1 loops=2)\n
+-> Index lookup on m using PRIMARY (teamID=m1.teamID)  (cost=0.54 rows=6) (actual time=0.006..0.009 rows=8 loops=2)\n      
+-> Single-row index lookup on u using PRIMARY (userID=m.userID)  (cost=0.26 rows=1) (actual time=0.003..0.003 rows=1 loops=15)\n',)
+
+
+Explain Analyze Query 2
+('-> Sort: p.percentCorrect DESC  (actual time=2.341..2.341 rows=4 loops=1)\n    
+-> Stream results  (cost=1695.85 rows=16800) (actual time=2.260..2.271 rows=4 loops=1)\n        
+-> Nested loop inner join  (cost=1695.85 rows=16800) (actual time=2.256..2.266 rows=4 loops=1)\n            
+-> Index lookup on mem using PRIMARY (teamID=691)  (cost=0.85 rows=6) (actual time=0.017..0.021 rows=6 loops=1)\n            
+-> Index lookup on p using <auto_key0> (userID=mem.userID)  (actual time=0.001..0.001 rows=1 loops=6)\n                
+-> Materialize  (cost=843.25..843.25 rows=2800) (actual time=2.240..2.241 rows=280 loops=1)\n              
+-> Group aggregate: avg(response.isCorrect)  (cost=563.25 rows=2800) (actual time=0.163..1.897 rows=280 loops=1)\n 
+-> Index scan on response using PRIMARY  (cost=283.25 rows=2800) (actual time=0.151..1.534 rows=2800 loops=1)\n',)
+
+('-> Sort: p.percentCorrect DESC  (actual time=1.460..1.460 rows=4 loops=1)\n    
+-> Stream results  (cost=1695.85 rows=16800) (actual time=1.434..1.444 rows=4 loops=1)\n        
+-> Nested loop inner join  (cost=1695.85 rows=16800) (actual time=1.432..1.440 rows=4 loops=1)\n            
+-> Index lookup on mem using PRIMARY (teamID=691)  (cost=0.85 rows=6) (actual time=0.017..0.020 rows=6 loops=1)\n            
+-> Index lookup on p using <auto_key0> (userID=mem.userID)  (actual time=0.001..0.001 rows=1 loops=6)\n                
+-> Materialize  (cost=843.25..843.25 rows=2800) (actual time=1.416..1.417 rows=280 loops=1)\n              
+-> Group aggregate: avg(response.isCorrect)  (cost=563.25 rows=2800) (actual time=0.040..1.169 rows=280 loops=1)\n
+-> Index scan on response using PRIMARY  (cost=283.25 rows=2800) (actual time=0.033..0.823 rows=2800 loops=1)\n',)
+
+
+
+('-> Table scan on <temporary>  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n    
+-> Temporary table with deduplication  (cost=5.00..5.00 rows=0) (actual time=0.127..0.128 rows=6 loops=1)\n        
+-> Table scan on p  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n           
+-> Materialize  (cost=2.50..2.50 rows=0) (actual time=0.107..0.108 rows=6 loops=1)\n                
+-> Table scan on <temporary>  (actual time=0.001..0.002 rows=6 loops=1)\n                    
+-> Aggregate using temporary table  (actual time=0.091..0.092 rows=6 loops=1)\n                        
+-> Nested loop inner join  (cost=4.75 rows=10) (actual time=0.032..0.061 rows=10 loops=1)\n                           
+-> Index lookup on response using PRIMARY (userID=1829)  (cost=1.25 rows=10) (actual time=0.021..0.025 rows=10 loops=1)\n
+-> Single-row index lookup on question using PRIMARY (questionID=response.questionID)  (cost=0.26 rows=1) (actual time=0.003..0.003 rows=1 loops=10)\n',)
+
+('-> Table scan on <temporary>  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n    
+-> Temporary table with deduplication  (cost=5.00..5.00 rows=0) (actual time=0.120..0.121 rows=6 loops=1)\n        
+-> Table scan on p  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n           
+-> Materialize  (cost=2.50..2.50 rows=0) (actual time=0.096..0.097 rows=6 loops=1)\n                
+-> Table scan on <temporary>  (actual time=0.001..0.001 rows=6 loops=1)\n                    
+-> Aggregate using temporary table  (actual time=0.082..0.083 rows=6 loops=1)\n                        
+-> Nested loop inner join  (cost=4.75 rows=10) (actual time=0.028..0.052 rows=10 loops=1)\n                            
+-> Index lookup on response using PRIMARY (userID=1829)  (cost=1.25 rows=10) (actual time=0.019..0.022 rows=10 loops=1)\n      
+-> Single-row index lookup on question using PRIMARY (questionID=response.questionID)  (cost=0.26 rows=1) (actual time=0.003..0.003 rows=1 loops=10)\n',)
+
+
+('-> Table scan on <temporary>  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n    
+-> Temporary table with deduplication  (cost=5.00..5.00 rows=0) (actual time=0.135..0.136 rows=6 loops=1)\n        
+-> Table scan on p  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n            
+-> Materialize  (cost=2.50..2.50 rows=0) (actual time=0.107..0.108 rows=6 loops=1)\n                
+-> Table scan on <temporary>  (actual time=0.001..0.001 rows=6 loops=1)\n                    
+-> Aggregate using temporary table  (actual time=0.094..0.095 rows=6 loops=1)\n                        
+-> Nested loop inner join  (cost=4.75 rows=10) (actual time=0.026..0.065 rows=10 loops=1)\n                            
+-> Index lookup on response using PRIMARY (userID=1829)  (cost=1.25 rows=10) (actual time=0.019..0.022 rows=10 loops=1)\n      
+-> Single-row index lookup on question using PRIMARY (questionID=response.questionID)  (cost=0.26 rows=1) (actual time=0.004..0.004 rows=1 loops=10)\n',)
+
+('-> Table scan on <temporary>  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n    
+-> Temporary table with deduplication  (cost=5.00..5.00 rows=0) (actual time=0.156..0.157 rows=6 loops=1)\n        
+-> Table scan on p  (cost=2.50..2.50 rows=0) (actual time=0.000..0.001 rows=6 loops=1)\n            
+-> Materialize  (cost=2.50..2.50 rows=0) (actual time=0.133..0.134 rows=6 loops=1)\n                
+-> Table scan on <temporary>  (actual time=0.001..0.002 rows=6 loops=1)\n                    
+-> Aggregate using temporary table  (actual time=0.117..0.118 rows=6 loops=1)\n                        
+-> Nested loop inner join  (cost=4.75 rows=10) (actual time=0.030..0.087 rows=10 loops=1)\n                            
+-> Index lookup on response using PRIMARY (userID=1829)  (cost=1.25 rows=10) (actual time=0.020..0.024 rows=10 loops=1)\n 
+-> Single-row index lookup on question using PRIMARY (questionID=response.questionID)  (cost=0.26 rows=1) (actual time=0.006..0.006 rows=1 loops=10)\n',)
