@@ -26,7 +26,7 @@ steps:
   args:
     - build
     - '--builder=gcr.io/buildpacks/builder:v1'
-    - '$_GCR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+    - '$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
     
 
 - id: 'Push Container Image'
