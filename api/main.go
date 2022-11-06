@@ -43,5 +43,7 @@ func main() {
 	// CORS Preflight Handler
 	router.Methods("OPTIONS").HandlerFunc(corsHandler)
 
+	log.Println("Listening on port: " + port)
+
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
