@@ -4,21 +4,6 @@ steps:
   name: golang
   args: ['go', 'mod', 'download']
 
-- id: 'Install linting tools'
-  name: golang
-  args: ['go', 'install', 'golang.org/x/tools/cmd/goimports@latest']
-
-- id: 'Lint'
-  name: golang
-  entrypoint: /bin/bash
-  args:
-    - '-c'
-    - |
-      goimports -l . 2>&1 | tee /dev/stderr | (! read)
-- id: 'Run Unit Tests'
-  name: golang
-  args: ['go', 'test', '-v', './...']
-
 # Setup resources for system tests
 - id: 'Build Container Image'
   name: 'gcr.io/k8s-skaffold/pack'
@@ -33,7 +18,7 @@ steps:
   name: 'gcr.io/cloud-builders/docker:latest'
   args:
     - push
-    - '$_GCR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA' 
+    - '$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA' 
 
 - id: 'Deploy to Cloud Run'
   name: 'gcr.io/cloud-builders/gcloud:latest'
@@ -42,7 +27,7 @@ steps:
     - '-c'
     - |
       gcloud run deploy ${_SERVICE_NAME}-$BUILD_ID \
-        --image $_GCR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA \
+        --image '$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA' \
         --region ${_DEPLOY_REGION} \
         --no-allow-unauthenticated
 - id: 'Retrieve Service URL'
