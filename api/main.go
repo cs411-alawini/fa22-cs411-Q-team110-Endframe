@@ -39,6 +39,15 @@ func main() {
 	// called by web app client
 	router.HandleFunc("/", homeLink)
 	router.HandleFunc("/select20Users", select20Users).Methods("GET")
+	router.HandleFunc("/getUser", getUser).Methods("GET")
+	router.HandleFunc("/getQuiz", getQuiz).Methods("GET")
+	router.HandleFunc("/getStats", getStats).Methods("GET")
+	router.HandleFunc("/createQuiz", createQuiz).Methods("POST")
+	router.HandleFunc("/updateUsername", updateUsername).Methods("PUT")
+	router.HandleFunc("/getQuestionText", getQuestionText).Methods("GET")
+	router.HandleFunc("/getTeamMembers", getTeamMembers).Methods("GET")
+	router.HandleFunc("/deleteUserFromTeam", deleteUserFromTeam).Methods("DELETE")
+	router.HandleFunc("/getScorePerCategory", getScorePerCategory).Methods("GET")
 
 	// CORS Preflight Handler
 	router.Methods("OPTIONS").HandlerFunc(corsHandler)
