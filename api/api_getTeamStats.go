@@ -31,7 +31,8 @@ import (
 */
 
 //(1)
-func getScorePerCategory(w http.ResponseWriter, r *http.Request) {
+//TESTS: DONE, use teamID=691
+func getTeamStats(w http.ResponseWriter, r *http.Request) {
 
 	// (2)
 	mutex.Lock()
@@ -58,40 +59,38 @@ func getScorePerCategory(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	// (6)
-	rows, err := db.Query("SELECT * FROM user LIMIT 20")
+	teamID := r.URL.Query().Get("teamID")
+
+	advancedQuery := fmt.Sprintf("SELECT mem.userID, p.percentCorrect, mem.teamID FROM teamMembership AS mem NATURAL JOIN (SELECT userID, 100*ROUND(AVG(isCorrect),2) AS percentCorrect FROM response GROUP BY userId) AS p WHERE mem.userID = p.userID AND mem.teamID = %s ORDER BY percentCorrect DESC", teamID)
+
+	rows, err := db.Query(advancedQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
+	// defer rows.Close()
 
-	// (7)
 	var (
-		userID        sql.NullInt16
-		password      sql.NullString
-		username      sql.NullString
-		profilePicURL sql.NullString
+		percentCorrect sql.NullFloat64
+		userID         sql.NullInt16
+		otherTeamID    sql.NullInt16
 	)
 
 	// (8)
-	var users []map[string]interface{}
-	userResponse := SQLResponse{users}
+	var responseObj []map[string]interface{}
+	userResponse := SQLResponse{responseObj}
 
 	// (9)
 	for rows.Next() {
-		err := rows.Scan(&userID, &password, &username, &profilePicURL)
+		err := rows.Scan(&userID, &percentCorrect, &otherTeamID)
 		if err != nil {
 			log.Fatal(err)
 		}
 		entry := make(map[string]interface{})
+		entry["percentCorrect"] = float64(percentCorrect.Float64)
 		entry["userID"] = int(userID.Int16)
-		entry["password"] = string(password.String)
-		entry["Username"] = string(username.String)
-		if profilePicURL.Valid {
-			entry["profilePicURL"] = string(profilePicURL.String)
-		}
-		userResponse.Msg = append(userResponse.Msg, entry)
+		entry["teamID"] = int(otherTeamID.Int16)
 		// log.Printf("user id %v: password: %v username: %v\n", userID, password, username)
+		userResponse.Msg = append(userResponse.Msg, entry)
 	}
 
 	// (10)

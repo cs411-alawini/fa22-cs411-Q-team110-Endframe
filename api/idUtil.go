@@ -12,3 +12,5 @@ func RandomNumberGenerator() *rand.Rand {
 }
 
 var idGenerator *rand.Rand = RandomNumberGenerator()
+
+var MAX_ID_INT int = 2147483647

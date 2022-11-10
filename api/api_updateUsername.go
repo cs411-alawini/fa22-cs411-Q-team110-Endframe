@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+//TESTS: DONE, use userID=2, newUsername = whatever
 func updateUsername(w http.ResponseWriter, r *http.Request) {
 
 	// (2)
@@ -81,7 +82,7 @@ func updateUsername(w http.ResponseWriter, r *http.Request) {
 	}
 	// (6)
 
-	updateUserQuery := fmt.Sprintf("UPDATE user SET username = %s WHERE userID = %s", username, userID)
+	updateUserQuery := fmt.Sprintf("UPDATE user SET Username = '%s' WHERE userID = %s", username, userID)
 	rows, err = db.Query(updateUserQuery)
 	if err != nil {
 		log.Fatal(err)

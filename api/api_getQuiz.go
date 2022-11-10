@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+// TESTS: DONE, use quizID = 10
 func getQuiz(w http.ResponseWriter, r *http.Request) {
 
 	// (2)

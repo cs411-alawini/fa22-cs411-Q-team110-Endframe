@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+//TESTS: DONE, user userID=6
 func getUser(w http.ResponseWriter, r *http.Request) {
 
 	// (2)
@@ -59,7 +60,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// (6)
-	uid := r.URL.Query().Get("uid")
+	uid := r.URL.Query().Get("userID")
 
 	query := fmt.Sprintf("SELECT * FROM user WHERE userID = %s", uid)
 

@@ -10,3 +10,5 @@ https://www.youtube.com/watch?v=3BN6YhS8tIs
 https://stackoverflow.com/questions/55446787/permission-issues-while-docker-push
 
 https://cloud.google.com/sql/docs/mysql/connect-run
+
+https://www.youtube.com/watch?v=jvZXbJv6qJ4

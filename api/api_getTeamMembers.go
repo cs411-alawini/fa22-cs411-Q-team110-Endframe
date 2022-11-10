@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+// TESTS: DONE, user userID=6
 func getTeamMembers(w http.ResponseWriter, r *http.Request) {
 
 	// (2)

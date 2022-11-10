@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+//TESTS: DONE
 func createQuiz(w http.ResponseWriter, r *http.Request) {
 
 	// (2)
@@ -62,7 +63,8 @@ func createQuiz(w http.ResponseWriter, r *http.Request) {
 	category := r.URL.Query().Get("category")
 	difficulty := r.URL.Query().Get("difficulty")
 
-	newQuizID := idGenerator.Int()
+	newQuizID := idGenerator.Intn(MAX_ID_INT)
+	log.Printf("New Quiz ID: %d", newQuizID/16)
 
 	createQuizQuery := fmt.Sprintf("INSERT INTO quiz (quizID) VALUES(%d)", newQuizID)
 	rows, err := db.Query(createQuizQuery)

@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+//TESTS: DONE, use username=user6
 func getStats(w http.ResponseWriter, r *http.Request) {
 
 	// (2)
@@ -60,7 +61,7 @@ func getStats(w http.ResponseWriter, r *http.Request) {
 
 	username := r.URL.Query().Get("username")
 
-	query := fmt.Sprintf("SELECT userID FROM user WHERE username = %s", username)
+	query := fmt.Sprintf("SELECT userID FROM user WHERE Username = '%s'", username)
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -76,6 +77,7 @@ func getStats(w http.ResponseWriter, r *http.Request) {
 	var users []int16
 	for rows.Next() {
 		err := rows.Scan(&userID)
+		// log.Printf("Extracted User: %d\n", userID.Int16)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -84,11 +86,11 @@ func getStats(w http.ResponseWriter, r *http.Request) {
 
 	advancedQuery := fmt.Sprintf("SELECT p.percentCorrect, p.category FROM (SELECT userID, 100*round(avg(isCorrect),2) as percentCorrect, category FROM response NATURAL JOIN question GROUP BY userId, category) as p WHERE userID = %d GROUP BY p.category", users[0])
 
-	rows2, err := db.Query(advancedQuery)
+	rows, err = db.Query(advancedQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows2.Close()
+	// defer rows.Close()
 
 	var (
 		percentCorrect sql.NullFloat64
@@ -100,7 +102,7 @@ func getStats(w http.ResponseWriter, r *http.Request) {
 	userResponse := SQLResponse{responseObj}
 
 	// (9)
-	for rows2.Next() {
+	for rows.Next() {
 		err := rows.Scan(&percentCorrect, &category)
 		if err != nil {
 			log.Fatal(err)
@@ -109,6 +111,7 @@ func getStats(w http.ResponseWriter, r *http.Request) {
 		entry["percentCorrect"] = float64(percentCorrect.Float64)
 		entry["category"] = string(category.String)
 		// log.Printf("user id %v: password: %v username: %v\n", userID, password, username)
+		userResponse.Msg = append(userResponse.Msg, entry)
 	}
 
 	// (10)

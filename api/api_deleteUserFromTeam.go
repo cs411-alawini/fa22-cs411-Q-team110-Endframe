@@ -30,6 +30,7 @@ import (
 */
 
 //(1)
+//TESTS: DONE, use user = 1345. team = 1
 func deleteUserFromTeam(w http.ResponseWriter, r *http.Request) {
 
 	// (2)

@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+//TESTS: DONE
 func select20Users(w http.ResponseWriter, r *http.Request) {
 
 	// (2)

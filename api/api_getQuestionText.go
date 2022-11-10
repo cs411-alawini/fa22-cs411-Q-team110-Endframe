@@ -31,6 +31,7 @@ import (
 */
 
 //(1)
+//TESTS: DONE, use qid=820
 func getQuestionText(w http.ResponseWriter, r *http.Request) {
 
 	// (2)
