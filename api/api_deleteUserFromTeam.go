@@ -65,7 +65,17 @@ func deleteUserFromTeam(w http.ResponseWriter, r *http.Request) {
 	deleteUserFromTeamQuery := fmt.Sprintf("DELETE FROM teamMembership WHERE userID = %s AND teamID = %s", userID, teamID)
 	rows, err := db.Query(deleteUserFromTeamQuery)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
 	}
 	defer rows.Close()
 

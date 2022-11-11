@@ -64,20 +64,42 @@ func createQuiz(w http.ResponseWriter, r *http.Request) {
 	difficulty := r.URL.Query().Get("difficulty")
 
 	newQuizID := idGenerator.Intn(MAX_ID_INT)
-	log.Printf("New Quiz ID: %d", newQuizID/16)
 
 	createQuizQuery := fmt.Sprintf("INSERT INTO quiz (quizID) VALUES(%d)", newQuizID)
 	rows, err := db.Query(createQuizQuery)
+	if err != nil {
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
+	}
 
 	tenQuestionsQuery := fmt.Sprintf("SELECT questionID FROM question ORDER BY RAND() LIMIT 10")
 
 	if category != "" && difficulty != "" {
-		tenQuestionsQuery = fmt.Sprintf("SELECT questionID FROM question WHERE category = %s AND difficulty = %s ORDER BY RAND() LIMIT 10", category, difficulty)
+		tenQuestionsQuery = fmt.Sprintf("SELECT questionID FROM question WHERE category='%s' AND difficulty='%s' ORDER BY RAND() LIMIT 10", category, difficulty)
 	}
 
 	rows, err = db.Query(tenQuestionsQuery)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
 	}
 	defer rows.Close()
 

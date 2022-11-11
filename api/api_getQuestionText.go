@@ -65,7 +65,17 @@ func getQuestionText(w http.ResponseWriter, r *http.Request) {
 	getQuestionTextQuery := fmt.Sprintf("SELECT questionText FROM question WHERE questionID = %s", qid)
 	rows, err := db.Query(getQuestionTextQuery)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
 	}
 	defer rows.Close()
 

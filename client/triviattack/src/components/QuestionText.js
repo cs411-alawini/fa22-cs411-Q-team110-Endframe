@@ -9,6 +9,7 @@ class QuestionText extends Component {
 
         super(props);
         this.state = {
+
             questionID: this.props.questionID,
             questionText: this.props.questionText
         }
@@ -47,7 +48,7 @@ class QuestionText extends Component {
 
     render() {
         return (
-            <div className=''>
+            <div className='questionText'>
                 <div>
                     <span className="section-header"> Question Selector: </span>
                 </div>

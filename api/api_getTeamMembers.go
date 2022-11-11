@@ -66,7 +66,17 @@ func getTeamMembers(w http.ResponseWriter, r *http.Request) {
 	teamMembersQuery := fmt.Sprintf("SELECT DISTINCT u.Username, t.teamName FROM teamMembership m NATURAL JOIN user u NATURAL JOIN team t WHERE teamID in (SELECT teamID FROM teamMembership m1 WHERE m1.userID = %s) GROUP BY t.teamName, u.Username ORDER BY t.teamName ASC", userID)
 	rows, err := db.Query(teamMembersQuery)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
 	}
 	defer rows.Close()
 

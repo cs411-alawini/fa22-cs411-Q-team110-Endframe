@@ -62,13 +62,23 @@ func getQuiz(w http.ResponseWriter, r *http.Request) {
 	// (6)
 
 	// (6)
-	qid := r.URL.Query().Get("qid")
+	qID := r.URL.Query().Get("quizID")
 
-	query := fmt.Sprintf("SELECT * FROM quizQuestions WHERE quizID = %s", qid)
+	query := fmt.Sprintf("SELECT * FROM quizQuestions WHERE quizID = %s", qID)
 
 	rows, err := db.Query(query)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
 	}
 	defer rows.Close()
 

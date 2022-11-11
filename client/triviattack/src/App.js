@@ -1,6 +1,6 @@
 import './App.css';
-import QuestionText from './components/QuestionText'
 import { Component } from 'react';
+import TriviaPanel from './components/TriviaPanel';
 class App extends Component{
 
   constructor(props){
@@ -12,9 +12,7 @@ class App extends Component{
   }
 
 
-  updateQuestionTextHandler(newQuestionText, newQuestionID) {
-    this.setState({questionText: newQuestionText, questionID:newQuestionID});
-  }
+
 
 
   render(){
@@ -23,11 +21,7 @@ class App extends Component{
     return (
       
       <div>
-        <span>Triviattack</span>
-        <div className="App">
-          <QuestionText handler={this.updateQuestionTextHandler.bind(this)} questionID={this.state.questionID} questionText={this.state.questionText}/>
-        </div>
-        
+        <TriviaPanel/>
       </div>
     );
   }

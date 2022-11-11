@@ -65,7 +65,17 @@ func getTeamStats(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query(advancedQuery)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
 	}
 	// defer rows.Close()
 

@@ -56,7 +56,8 @@ func updateUsername(w http.ResponseWriter, r *http.Request) {
 	// (5)
 	_, err = db.Exec(fmt.Sprintf("USE %s", databaseName))
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+
 	}
 
 	// (6)
@@ -85,8 +86,20 @@ func updateUsername(w http.ResponseWriter, r *http.Request) {
 	updateUserQuery := fmt.Sprintf("UPDATE user SET Username = '%s' WHERE userID = %s", username, userID)
 	rows, err = db.Query(updateUserQuery)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		return
+
 	}
+
+	// (12)
 	defer rows.Close()
 
 	// (8)
