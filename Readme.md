@@ -28,6 +28,8 @@ Running the back end locally:
 
 Running the front end locally:
  1. Navigate to fa22-cs411-Q-team110-Endframe\client\triviattack in a separate terminal
- 2. execute:
-    >>npm start
- 3. Go to localhost:3000 in your favorite browser 
+ 2. execute
+    >> npm install
+ 3. execute:
+    >> npm start
+ 4. Go to localhost:3000 in your favorite browser 
