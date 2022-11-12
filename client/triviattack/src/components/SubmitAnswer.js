@@ -12,8 +12,7 @@ class SubmitAnswer extends Component {
 
             userAnswer:this.props.answer,
             userID:this.props.userID,
-            trueAnswer:this.props.answer,
-            isCorrect:this.props.isCorrect,
+            quizID:this.props.quizID,
             questionID:this.props.questionID,
             outputText: this.props.outputText
         }
@@ -21,11 +20,11 @@ class SubmitAnswer extends Component {
         this.base_url = config.baseURL;
     }
 
-    updateAnswerValue(event) {
+    updateResponse(event) {
         this.setState({userAnswer: event.target.value})
     }
 
-    updateQuestion(event) {
+    updateQuestionID(event) {
         this.setState({questionID: event.target.value})
     }
 
@@ -33,17 +32,24 @@ class SubmitAnswer extends Component {
         this.setState({userID: event.target.value})
     }
 
+    updateQuizID(event) {
+        this.setState({quizID: event.target.value})
+    }
+
 
     submitAnswer(){
-          let endpoint = "/submitAnswer"
-          let answerBody = {
-            "questionID": "",
-            "userID": "",
-            "quizID": "",
-            "userAnswer":""
+        let h = new Date()
+        let currDate = h.toLocaleString().slice(0,-3)
+        let endpoint = "/submitAnswer"
+        let answerBody = {
+        "questionID": this.state.questionID,
+        "userID": this.state.userID,
+        "quizID": this.state.quizID,
+        "userAnswer":this.state.userAnswer,
+        "date":currDate
 
-          }
-          fetch(`${this.scheme}${this.base_url}${endpoint}?questionID=${this.state.questionID}&userID=${this.state.userID}&userAnswer=${this.state.userAnswer}&question=${this.state.questionID}`, {
+        }
+          fetch(`${this.scheme}${this.base_url}${endpoint}?questionID=${this.state.questionID}&userID=${this.state.userID}&userResponse=${this.state.userAnswer}&quizID=${this.state.quizID}&date=${currDate}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -69,25 +75,52 @@ class SubmitAnswer extends Component {
 
     render() {
         return (
-            <div className='get-team-stats'>
+            <div className='submit-answer'>
                 <div>
-                    <span className="section-header"> Get Team Stats: </span>
+                    <span className="section-header"> Submit Answer: </span>
                 </div>
                 <div>
-                   <span>Team Stats: {this.props.outputText}</span> 
+                   <span>Actual Answer: {this.props.outputText}</span> 
                 </div>
                 <div >
                     <div>
-                        <span>Team ID</span>
+                        <span>User ID</span>
                         <input
                             className='teamID'
                             type="text"
-                            value={this.state.teamID}
-                            onChange={(event) => this.updateTeamIDValue(event)}
+                            value={this.state.userID}
+                            onChange={(event) => this.updateUserID(event)}
+                        />
+                    </div>
+                    <div>
+                        <span>Question ID</span>
+                        <input
+                            className='questionID'
+                            type="text"
+                            value={this.state.questionID}
+                            onChange={(event) => this.updateQuestionID(event)}
+                        />
+                    </div>
+                    <div>
+                        <span>Quiz ID</span>
+                        <input
+                            className='quizID'
+                            type="text"
+                            value={this.state.quizID}
+                            onChange={(event) => this.updateQuizID(event)}
+                        />
+                    </div>
+                    <div>
+                        <span>User Response</span>
+                        <input
+                            className='response'
+                            type="text"
+                            value={this.state.userAnswer}
+                            onChange={(event) => this.updateResponse(event)}
                         />
                     </div>
                 </div>
-                <button onClick={() => this.getTeamStats()}>
+                <button onClick={() => this.submitAnswer()}>
                     Submit
                 </button>
             </div>
@@ -95,4 +128,4 @@ class SubmitAnswer extends Component {
     }
 }
 
-export default TeamStats
+export default SubmitAnswer

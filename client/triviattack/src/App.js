@@ -15,6 +15,7 @@ import TeamStats from './components/TeamStats';
 import UpdateUsername from './components/UpdateUsername';
 import UserInfo from './components/UserInfo';
 import config from './config/config';
+import SubmitAnswer from './components/SubmitAnswer';
 class App extends Component{
 
   constructor(props) {
@@ -34,7 +35,8 @@ class App extends Component{
         teamMembersText:'',
         teamStatsText:'',
         userInfoText:'',
-        updateUserText:''
+        updateUserText:'',
+        userResponseText:''
 
 
     }
@@ -78,6 +80,10 @@ userInfoHandler(text) {
     this.setState({userInfoText: text});
 }
 
+userResponseHandler(text) {
+    this.setState({userResponseText: text});
+}
+
 
   render(){
     return (
@@ -95,6 +101,7 @@ userInfoHandler(text) {
           <Route path='/team-stats' element={<TeamStats handler={this.teamStatsTextHandler.bind(this)} userID="" outputText={this.state.teamStatsText}/>} />
           <Route path='/update-username' element={<UpdateUsername handler={this.updateUserTextHandler.bind(this)} userID="" newUsername="" outputText={this.state.updateUserText}/>} />
           <Route path='/user-info' element={<UserInfo handler={this.userInfoHandler.bind(this)} userID="" outputText={this.state.userInfoText}/>} />
+          <Route path='/user-response' element={<SubmitAnswer handler={this.userResponseHandler.bind(this)} userID="" questionID="" quizID="" outputText={this.state.userResponseText}/>} />
       </Routes>
       </Router>
       

@@ -43,6 +43,7 @@ func main() {
 	router.HandleFunc("/getQuiz", getQuiz).Methods("GET")
 	router.HandleFunc("/getStats", getStats).Methods("GET")
 	router.HandleFunc("/createQuiz", createQuiz).Methods("POST")
+	router.HandleFunc("/submitAnswer", createResponse).Methods("POST")
 	router.HandleFunc("/updateUsername", updateUsername).Methods("PUT")
 	router.HandleFunc("/getQuestionText", getQuestionText).Methods("GET")
 	router.HandleFunc("/getTeamMembers", getTeamMembers).Methods("GET")

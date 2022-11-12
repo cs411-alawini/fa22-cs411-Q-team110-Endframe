@@ -37,6 +37,9 @@ const Navbar = () => {
           <NavLink to="/user-info" activeStyle>
             User Info
           </NavLink>
+          <NavLink to="/user-response" activeStyle>
+            User Response
+          </NavLink>
         </NavMenu>
       </Nav>
     </>

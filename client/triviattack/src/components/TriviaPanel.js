@@ -10,6 +10,7 @@ import TeamMembers from './TeamMembers';
 import TeamStats from './TeamStats';
 import UpdateUsername from './UpdateUsername';
 import UserInfo from './UserInfo';
+import SubmitAnswer from './SubmitAnswer';
 
 
 class TriviaPanel extends Component {
@@ -31,7 +32,8 @@ class TriviaPanel extends Component {
             teamMembersText:'',
             teamStatsText:'',
             userInfoText:'',
-            updateUserText:''
+            updateUserText:'',
+            userResponseText:''
 
 
         }
@@ -75,6 +77,10 @@ class TriviaPanel extends Component {
         this.setState({userInfoText: text});
     }
 
+    userResponseHandler(text) {
+        this.setState({userResponseText: text});
+    }
+
     render() {
         return (
             <div>
@@ -113,6 +119,10 @@ class TriviaPanel extends Component {
 
                 <div className="user-info">
                     <UserInfo handler={this.userInfoHandler.bind(this)} userID="" outputText={this.state.userInfoText}/>
+                </div>
+
+                <div className="user-info">
+                    <SubmitAnswer handler={this.userResponseHandler.bind(this)} userID="" questionID="" quizID="" outputText={this.state.userResponseText}/>
                 </div>
 
 
