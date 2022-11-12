@@ -62,7 +62,18 @@ func select20Users(w http.ResponseWriter, r *http.Request) {
 	// (6)
 	rows, err := db.Query("SELECT * FROM user LIMIT 20")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		errResp := make(map[string]interface{})
+		errResp["Msg"] = "error"
+		errResp["Body"] = err
+		u, err := json.Marshal(errResp)
+		if err != nil {
+			panic(err)
+		}
+		w.Write(u)
+		mutex.Unlock()
+		return
+
 	}
 	defer rows.Close()
 
@@ -109,7 +120,8 @@ func select20Users(w http.ResponseWriter, r *http.Request) {
 
 	// (12)
 	w.Write(u)
+	mutex.Unlock()
 
 	// (13)
-	mutex.Unlock()
+
 }

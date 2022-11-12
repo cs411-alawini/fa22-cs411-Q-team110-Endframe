@@ -76,6 +76,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 		w.Write(u)
+		mutex.Unlock()
 		return
 
 	}
@@ -124,7 +125,8 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 
 	// (12)
 	w.Write(u)
+	mutex.Unlock()
 
 	// (13)
-	mutex.Unlock()
+
 }
