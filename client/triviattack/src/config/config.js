@@ -1,6 +1,6 @@
 const config = {
-    baseScheme: "http://",
-    baseURL: "localhost:8080"
+    baseScheme: "https://",
+    baseURL: "triviattack-ebo6y2ojba-uc.a.run.app"
 }
 
 export default config
