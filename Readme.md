@@ -34,13 +34,13 @@ testing script in /util/api_sql_calls_tester.py
     >> npm start
  4. Go to localhost:3000 in your favorite browser 
 
-### Pushing the docker instance to gcr
+### Pushing the server docker instance to gcr
  Prerequisites: 
    1. install the google cloud command line, gcloud
 
  1. Navigate to fa22-cs411-Q-team110-Endframe\
  2. Execute:
-   >> docker build triviattack .
-   >> docker run triviattack //to test the docker image
+   >> docker build -t triviattack ./api/
+   >> docker run -p 8080:8080 triviattack //to test the docker image
    >> docker tag triviattack gcr.io/endframe/triviattack
    >> docker push gcr.io/endframe/triviattack

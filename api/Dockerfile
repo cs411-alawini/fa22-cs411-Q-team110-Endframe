@@ -1,9 +1,9 @@
 FROM golang:1.18-alpine
 WORKDIR /app
-COPY ./api/go.mod .
-COPY ./api/go.sum .
+COPY ./go.mod .
+COPY ./go.sum .
 RUN go mod download
-COPY ./api/ .
+COPY . .
 RUN go build -o ./out/server .
 
 CMD ["/app/out/server"]
