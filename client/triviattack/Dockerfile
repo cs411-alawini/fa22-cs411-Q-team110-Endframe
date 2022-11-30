@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install --legacy-peer-deps
 COPY . ./
+ARG FAST_REFRESH=false
 RUN npm run build
 
 # release step
