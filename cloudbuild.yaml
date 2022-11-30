@@ -2,13 +2,21 @@
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
    args: ['build', '-t', 'gcr.io/$PROJECT_ID/triviattack-cicd:$COMMIT_SHA', './api/']
+   id: build-api
  - name: 'gcr.io/cloud-builders/docker'
    args: ['build', '-t', 'gcr.io/$PROJECT_ID/triviattack-frontend:$COMMIT_SHA', './client/triviattack/']
+   id: build-client
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
    args: ['push', 'gcr.io/$PROJECT_ID/triviattack-cicd:$COMMIT_SHA']
+   id: push-api
+   waitFor:
+   - build-api
  - name: 'gcr.io/cloud-builders/docker'
    args: ['push', 'gcr.io/$PROJECT_ID/triviattack-frontend:$COMMIT_SHA']
+   id: push-client
+   waitFor:
+   - build-client
  # Deploy container image to Cloud Run
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    entrypoint: gcloud
@@ -20,6 +28,8 @@
    - 'gcr.io/$PROJECT_ID/triviattack-cicd:$COMMIT_SHA'
    - '--region'
    - 'us-central1'
+   waitFor:
+   - push-api
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    entrypoint: gcloud
    args:
@@ -30,6 +40,8 @@
    - 'gcr.io/$PROJECT_ID/triviattack-frontend:$COMMIT_SHA'
    - '--region'
    - 'us-central1'
+   waitFor:
+   - push-client
  images:
  - 'gcr.io/$PROJECT_ID/triviattack-cicd:$COMMIT_SHA'
  - 'gcr.io/$PROJECT_ID/triviattack-frontend:$COMMIT_SHA'
