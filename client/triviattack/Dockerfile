@@ -3,8 +3,8 @@ FROM node:19-alpine3.15 as build
 WORKDIR /app
 COPY package.json ./
 RUN npm install --legacy-peer-deps
-COPY ./public/ ./
-COPY ./src/ ./
+COPY ./public ./
+COPY ./src ./
 ARG FAST_REFRESH=false
 RUN npm run build
 
