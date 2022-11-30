@@ -64,7 +64,7 @@ func getQuiz(w http.ResponseWriter, r *http.Request) {
 	// (6)
 	qID := r.URL.Query().Get("quizID")
 
-	query := fmt.Sprintf("SELECT * FROM quizQuestions WHERE quizID = %s", qID)
+	query := fmt.Sprintf("SELECT * FROM quizQuestions WHERE quizID=%s", qID)
 
 	rows, err := db.Query(query)
 	if err != nil {
@@ -85,7 +85,7 @@ func getQuiz(w http.ResponseWriter, r *http.Request) {
 
 	// (7)
 	var (
-		quizID     sql.NullInt16
+		quizID     sql.NullInt32
 		questionID sql.NullInt16
 	)
 
@@ -100,7 +100,7 @@ func getQuiz(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 		entry := make(map[string]interface{})
-		entry["quizID"] = int(quizID.Int16)
+		entry["quizID"] = int(quizID.Int32)
 		entry["questionID"] = int(questionID.Int16)
 		userResponse.Msg = append(userResponse.Msg, entry)
 		// log.Printf("user id %v: password: %v username: %v\n", userID, password, username)
