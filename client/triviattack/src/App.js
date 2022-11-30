@@ -16,6 +16,7 @@ import UpdateUsername from './components/UpdateUsername';
 import UserInfo from './components/UserInfo';
 import config from './config/config';
 import SubmitAnswer from './components/SubmitAnswer';
+import TakeQuiz from './components/TakeQuiz';
 class App extends Component{
 
   constructor(props) {
@@ -102,6 +103,7 @@ userResponseHandler(text) {
           <Route path='/update-username' element={<UpdateUsername handler={this.updateUserTextHandler.bind(this)} userID="" newUsername="" outputText={this.state.updateUserText}/>} />
           <Route path='/user-info' element={<UserInfo handler={this.userInfoHandler.bind(this)} userID="" outputText={this.state.userInfoText}/>} />
           <Route path='/user-response' element={<SubmitAnswer handler={this.userResponseHandler.bind(this)} userID="" questionID="" quizID="" outputText={this.state.userResponseText}/>} />
+          <Route path='/take-quiz' element={<TakeQuiz />} />
       </Routes>
       </Router>
       
