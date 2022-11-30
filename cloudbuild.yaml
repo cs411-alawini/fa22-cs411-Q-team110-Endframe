@@ -17,7 +17,7 @@
    - 'deploy'
    - 'triviattack-cicd'
    - '--image'
-   - 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA'
+   - 'gcr.io/$PROJECT_ID/triviattack-cicd:$COMMIT_SHA'
    - '--region'
    - 'us-central1'
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -27,7 +27,7 @@
    - 'deploy'
    - 'triviattack-frontend'
    - '--image'
-   - 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA'
+   - 'gcr.io/$PROJECT_ID/triviattack-frontend:$COMMIT_SHA'
    - '--region'
    - 'us-central1'
  images:
