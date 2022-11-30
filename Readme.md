@@ -44,3 +44,5 @@ testing script in /util/api_sql_calls_tester.py
    >> docker run -p 8080:8080 triviattack //to test the docker image
    >> docker tag triviattack gcr.io/endframe/triviattack
    >> docker push gcr.io/endframe/triviattack
+
+Test CICD with random change
