@@ -64,7 +64,7 @@ func getQuiz(w http.ResponseWriter, r *http.Request) {
 	// (6)
 	qID := r.URL.Query().Get("quizID")
 
-	query := fmt.Sprintf("SELECT * FROM quizQuestions WHERE quizID=%s", qID)
+	query := fmt.Sprintf("SELECT quizID,questionID FROM quizQuestions WHERE quizID=%s", qID)
 
 	rows, err := db.Query(query)
 	if err != nil {
