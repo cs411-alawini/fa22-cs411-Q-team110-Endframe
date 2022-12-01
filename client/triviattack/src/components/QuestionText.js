@@ -1,9 +1,9 @@
 import '../App.css';
 import React, {Component} from 'react';
 import config from '../config/config'
+import CreateQuiz, {qid_array} from './CreateQuiz';
 
-
-class QuestionText extends Component {
+export class QuestionText extends Component {
 
     constructor(props) {
 
@@ -19,6 +19,7 @@ class QuestionText extends Component {
 
     updateSearchValue(event) {
         this.setState({questionID: event.target.value})
+        // this.setState({questionID: QUESTION_ID})
     }
 
     searchForQuestionText(){
@@ -39,6 +40,10 @@ class QuestionText extends Component {
             });
 
           
+    }
+
+    testfunction(newQuestionID){
+        this.setState({questionID: newQuestionID})
     }
 
     componentDidMount() {
