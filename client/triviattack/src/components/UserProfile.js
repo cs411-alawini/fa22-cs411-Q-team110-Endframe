@@ -13,7 +13,7 @@ import UserInfo from './UserInfo';
 import SubmitAnswer from './SubmitAnswer';
 
 
-class TakeQuiz extends Component {
+class UserProfile extends Component {
 
     constructor(props) {
 
@@ -85,20 +85,31 @@ class TakeQuiz extends Component {
         return (
             <div>
                 <span>Triviattack</span>
-                <div className="display-question">
-                    <QuestionText handler={this.updateQuestionTextHandler.bind(this)} questionID={this.state.questionID} questionText={this.state.questionText}/>
+               
+
+                <div className="delete-user-from-team">
+                    <DeleteUserFromTeam handler={this.deleteUserFromTeamTextHandler.bind(this)} teamID="category" userID="difficulty" outputText={this.state.deleteUserText}/>
                 </div>
 
-                <div className="create-quiz">
-                    <CreateQuiz handler={this.updateCreateQuizTextHandler.bind(this)} category="category" difficulty="difficulty" outputText={this.state.createQuizText}/>
+
+                <div className="user-stats">
+                    <UserStats handler={this.userStatsTextHandler.bind(this)} username="" outputText={this.state.statsText}/>
                 </div>
 
-                <div className="question-list">
-                    <QuestionList handler={this.quizQuestionsTextHandler.bind(this)} quizID="" outputText={this.state.quizQuestionsText}/>
+                <div className="team-members">
+                    <TeamMembers handler={this.teamMembersTextHandler.bind(this)} userID="" outputText={this.state.teamMembersText}/>
                 </div>
 
-                <div className="submit-answer">
-                    <SubmitAnswer handler={this.userResponseHandler.bind(this)} userID="" questionID="" quizID="" outputText={this.state.userResponseText}/>
+                <div className="team-stats">
+                    <TeamStats handler={this.teamStatsTextHandler.bind(this)} userID="" outputText={this.state.teamStatsText}/>
+                </div>
+
+                <div className="update-username">
+                    <UpdateUsername handler={this.updateUserTextHandler.bind(this)} userID="" newUsername="" outputText={this.state.updateUserText}/>
+                </div>
+
+                <div className="user-info">
+                    <UserInfo handler={this.userInfoHandler.bind(this)} userID="" outputText={this.state.userInfoText}/>
                 </div>
 
 
@@ -108,4 +119,4 @@ class TakeQuiz extends Component {
     }
 }
 
-export default TakeQuiz
+export default UserProfile

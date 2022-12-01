@@ -17,6 +17,7 @@ import UserInfo from './components/UserInfo';
 import config from './config/config';
 import SubmitAnswer from './components/SubmitAnswer';
 import TakeQuiz from './components/TakeQuiz';
+import UserProfile from './components/UserProfile';
 class App extends Component{
 
   constructor(props) {
@@ -93,16 +94,7 @@ userResponseHandler(text) {
       <Routes>
           {/* <Route exact path='/' exact element={<Home />} /> */}
           <Route path='/home' element={<Home/>} />
-          <Route path='/create-quiz' element={<CreateQuiz handler={this.updateCreateQuizTextHandler.bind(this)} category="category" difficulty="difficulty" outputText={this.state.createQuizText}/>} />
-          <Route path='/question-text' element={<QuestionText handler={this.updateQuestionTextHandler.bind(this)} questionID={this.state.questionID} questionText={this.state.questionText}/>} />
-          <Route path='/delete-user' element={<DeleteUserFromTeam handler={this.deleteUserFromTeamTextHandler.bind(this)} teamID="category" userID="difficulty" outputText={this.state.deleteUserText}/>} />
-          <Route path='/question-list' element={<QuestionList handler={this.quizQuestionsTextHandler.bind(this)} quizID="" outputText={this.state.quizQuestionsText}/>} />
-          <Route path='/user-stats' element={<UserStats handler={this.userStatsTextHandler.bind(this)} username="" outputText={this.state.statsText}/>} />
-          <Route path='/team-members' element={<TeamMembers handler={this.teamMembersTextHandler.bind(this)} userID="" outputText={this.state.teamMembersText}/>} />
-          <Route path='/team-stats' element={<TeamStats handler={this.teamStatsTextHandler.bind(this)} userID="" outputText={this.state.teamStatsText}/>} />
-          <Route path='/update-username' element={<UpdateUsername handler={this.updateUserTextHandler.bind(this)} userID="" newUsername="" outputText={this.state.updateUserText}/>} />
-          <Route path='/user-info' element={<UserInfo handler={this.userInfoHandler.bind(this)} userID="" outputText={this.state.userInfoText}/>} />
-          <Route path='/user-response' element={<SubmitAnswer handler={this.userResponseHandler.bind(this)} userID="" questionID="" quizID="" outputText={this.state.userResponseText}/>} />
+          <Route path='/user-profile' element={<UserProfile />} />
           <Route path='/take-quiz' element={<TakeQuiz />} />
       </Routes>
       </Router>
