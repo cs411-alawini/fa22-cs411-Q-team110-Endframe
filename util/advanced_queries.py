@@ -47,9 +47,9 @@ try:
     CREATE PROCEDURE get_scores(IN input_userID int)
     BEGIN
     DECLARE varUserID INT;
-    DECLARE perCorrect FLOAT;
-    DECLARE category VARCHAR(30);
-    DECLARE max_user_avg INT;
+    DECLARE perCorrect REAL;
+    DECLARE category1 VARCHAR(30);
+    DECLARE max_user_avg REAL;
     DECLARE max_user_cat VARCHAR(30);
     DECLARE exit_loop BOOLEAN DEFAULT FALSE;
     DECLARE members CURSOR FOR (SELECT DISTINCT u.userID FROM teamMembership m NATURAL JOIN user u NATURAL JOIN team t WHERE m.teamID IN (SELECT teamID FROM teamMembership m1 WHERE m1.userID = input_userID));
@@ -61,40 +61,46 @@ try:
                         avg_score double
                         );
 
-    (SELECT MAX(ran.percentCorrect), ran.category
+    SELECT ran.pc, ran.category
     INTO max_user_avg, max_user_cat
-    FROM (SELECT p.percentCorrect, p.category
+    FROM (SELECT MAX(p.percentCorrect) as pc, p.category
             FROM
                 (SELECT userID, 100*round(avg(isCorrect),2) AS percentCorrect, category
                 FROM response NATURAL JOIN question
                 GROUP BY userId, category) AS p
         WHERE userID = input_userID
-        GROUP BY p.percentCorrect, p.category) AS ran
-    GROUP BY ran.category);
-        
-
+        GROUP BY p.category) AS ran
+        LIMIT 1;
+    
     OPEN members;
     cloop: LOOP
+        SET exit_loop = false;
         FETCH members INTO varUserID;
         IF(exit_loop) THEN
             LEAVE cloop;
         END IF;
 
-        (SELECT MAX(ran.percentCorrect), ran.category
-        INTO perCorrect, category
-        FROM (SELECT p.percentCorrect, p.category
-                FROM
-                    (SELECT userID, 100*round(avg(isCorrect),2) AS percentCorrect, category
-                    FROM response NATURAL JOIN question
-                    GROUP BY userId, category) AS p
-            WHERE userID = varUserID
-            GROUP BY p.percentCorrect, p.category) AS ran
-        GROUP BY ran.category);
-        
 
-        IF (category = max_user_cat AND perCorrect > max_user_avg) THEN
-            INSERT INTO FinalTable VALUES (varUserID, category, perCorrect);
+        SELECT ran.pc, ran.category
+        INTO perCorrect, category1
+        FROM (SELECT MAX(p.percentCorrect) as pc, p.category
+            FROM
+                (SELECT userID, 100*round(avg(isCorrect),2) AS percentCorrect, category
+                FROM response NATURAL JOIN question
+                GROUP BY userId, category) AS p
+        WHERE userID = varUserID
+        GROUP BY p.category) AS ran
+        LIMIT 1;
+
+        
+        IF (category1 IS NULL OR perCorrect IS NULL) THEN
+            ITERATE  cloop;
         END IF;
+
+        IF (category1 <> max_user_cat AND perCorrect > max_user_avg) THEN
+            INSERT INTO FinalTable VALUES (varUserID, category1, perCorrect);
+        END IF;
+        
 
     END LOOP cloop;
     CLOSE members;

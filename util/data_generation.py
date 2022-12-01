@@ -49,13 +49,13 @@ try:
         # cursor.execute(getQuestionsCmd)
         # quizzes = cursor.fetchall()
 
-        getUsersCmd = "select * from user"
-        cursor.execute(getUsersCmd)
-        users = cursor.fetchall()
+        # getUsersCmd = "select * from user"
+        # cursor.execute(getUsersCmd)
+        # users = cursor.fetchall()
 
-        getTeamsCmd = "select * from team"
-        cursor.execute(getTeamsCmd)
-        teams = cursor.fetchall()
+        # getTeamsCmd = "select * from team"
+        # cursor.execute(getTeamsCmd)
+        # teams = cursor.fetchall()
 
         # getMembershipCmd = "select * from teamMembership limit 20"
         # cursor.execute(getMembershipCmd)
@@ -69,16 +69,52 @@ try:
 
         
         ### generate relationship tables teamMembership
-        counter = 0
-        for team in teams:
-            print("iter " + str(counter))
-            userNums = random.sample(range(0,len(users)), random.sample(range(1,11), 1)[0]) # number of users per team = between 1 and 10
-            for ix in userNums:
-                new_userID = users[ix][0]
-                print("(userID, teamID) values ({userID},{teamID})".format(userID = new_userID, teamID = team[0]))
-                populateTeamCmd = "insert into teamMembership (userID, teamID) values ({userID},{teamID})".format(userID = new_userID, teamID = team[0])
-                cursor.execute(populateTeamCmd)
-            counter = counter + 1
+        users = [520, 3305, 1055, 1281, 3293, 1503, 4558, 3318, 2608, 2985]
+        teams = [98765]
+        quizIds = [342635895, 254866171, 1246910684]
+
+        # counter = 0
+        # for team in teams:
+        #     print("iter " + str(counter))
+        #     # userNums = random.sample(range(0,len(users)), random.sample(range(1,11), 1)[0]) # number of users per team = between 1 and 10
+        #     for ix in users:
+        #         new_userID = ix
+        #         print("(userID, teamID) values ({userID},{teamID})".format(userID = new_userID, teamID = team))
+        #         populateTeamCmd = "insert into teamMembership (userID, teamID) values ({userID},{teamID})".format(userID = new_userID, teamID = team)
+        #         cursor.execute(populateTeamCmd)
+        #     counter = counter + 1
+
+        counterID = 10000
+        for quiz in quizIds:
+            for ix in range(0,len(users)): #len(userNums) should be replaced with N
+                print(ix)
+                userIx = users[ix]
+                # res = get the questionIDs that have that quizID (select questionID from quizQuestions where quizID = quiz.id)
+                getQuestionsCmd = "select questionID from quizQuestions where quizID = {quizID}".format(quizID = quiz)
+                cursor.execute(getQuestionsCmd)
+                questIDs = cursor.fetchall()
+                for questID in questIDs:
+                    d1 = datetime.strptime('1/1/2019 1:30 PM', '%m/%d/%Y %I:%M %p')
+                    d2 = datetime.strptime('10/18/2022 4:50 AM', '%m/%d/%Y %I:%M %p')
+                    now = random_date(d1, d2)
+                    formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
+                    # print(formatted_date)
+                    # responseCreateCommand = "insert into response (responseID, quizID, questionID, userID, isCorrect, date) values ({quizID}, {questionID}, {userID}, {correctness}, {date})".format(quizID = quizzes[quizIx][0],questionID = questID[0],userID = users[userIx][0],correctness = random.randrange(2),date = formatted_date)
+                    # cursor.execute(responseCreateCommand)
+
+                    cursor.execute("insert into response (responseID, quizID, questionID, userID, isCorrect, date) values (%s, %s, %s, %s, %s, %s)", (counterID, quiz,questID[0],userIx, random.randrange(2),formatted_date))
+                    counterID = counterID + 1
+        
+        # counter = 0
+        # for team in teams:
+        #     print("iter " + str(counter))
+        #     userNums = random.sample(range(0,len(users)), random.sample(range(1,11), 1)[0]) # number of users per team = between 1 and 10
+        #     for ix in userNums:
+        #         new_userID = users[ix][0]
+        #         print("(userID, teamID) values ({userID},{teamID})".format(userID = new_userID, teamID = team[0]))
+        #         populateTeamCmd = "insert into teamMembership (userID, teamID) values ({userID},{teamID})".format(userID = new_userID, teamID = team[0])
+        #         cursor.execute(populateTeamCmd)
+        #     counter = counter + 1
         
         # ## generate response data
         # getQuizzesCmd = "select quizID from quiz"

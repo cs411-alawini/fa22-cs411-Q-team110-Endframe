@@ -104,7 +104,6 @@ func getQuiz(w http.ResponseWriter, r *http.Request) {
 		entry["questionID"] = int(questionID.Int16)
 		userResponse.Msg = append(userResponse.Msg, entry)
 		// log.Printf("user id %v: password: %v username: %v\n", userID, password, username)
-		userResponse.Msg = append(userResponse.Msg, entry)
 	}
 
 	// (10)

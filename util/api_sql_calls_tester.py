@@ -30,8 +30,15 @@ try:
 
 
     ### is response table formatted correctly and print table headers
-    getFromResponseTableCmd = "select * from response limit 20"
-    cursor.execute(getFromResponseTableCmd)
+    query = """
+    CALL get_scores(1055);
+    """
+
+    # query = """
+    
+    
+    # """
+    cursor.execute(query)
     colInfo = cursor.description
     print("colNames: " + str([col[0] for col in colInfo]))
     results = cursor.fetchall()
