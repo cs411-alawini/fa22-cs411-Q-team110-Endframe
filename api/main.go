@@ -49,6 +49,7 @@ func main() {
 	router.HandleFunc("/getTeamMembers", getTeamMembers).Methods("GET")
 	router.HandleFunc("/getTeamStats", getTeamStats).Methods("GET")
 	router.HandleFunc("/deleteUserFromTeam", deleteUserFromTeam).Methods("DELETE")
+	router.HandleFunc("/getCompetitionTeam", getCompetitionTeam).Methods("GET")
 
 	// CORS Preflight Handler
 	router.Methods("OPTIONS").HandlerFunc(corsHandler)
