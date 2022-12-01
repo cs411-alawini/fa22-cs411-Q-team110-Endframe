@@ -39,6 +39,7 @@ class TakeQuiz extends Component {
         }
         this.scheme = config.baseScheme;
         this.base_url = config.baseURL;
+        this.quiz_qs = ''
     }
 
     updateQuestionTextHandler(newQuestionText, newQuestionID) {
@@ -86,19 +87,31 @@ class TakeQuiz extends Component {
             <div>
                 <span>Triviattack</span>
                 <div className="display-question">
-                    <QuestionText handler={this.updateQuestionTextHandler.bind(this)} questionID={this.state.questionID} questionText={this.state.questionText}/>
+                    <QuestionText handler={this.updateQuestionTextHandler.bind(this)} 
+                    questionID={this.state.questionID} 
+
+                    questionText={this.state.questionText}/>
                 </div>
 
                 <div className="create-quiz">
-                    <CreateQuiz handler={this.updateCreateQuizTextHandler.bind(this)} category="category" difficulty="difficulty" outputText={this.state.createQuizText}/>
+                    <CreateQuiz handler={this.updateCreateQuizTextHandler.bind(this)} 
+                    category="category" 
+                    difficulty="difficulty" 
+                    outputText={this.state.createQuizText} />
                 </div>
 
                 <div className="question-list">
-                    <QuestionList handler={this.quizQuestionsTextHandler.bind(this)} quizID="" outputText={this.state.quizQuestionsText}/>
+                    <QuestionList handler={this.quizQuestionsTextHandler.bind(this)} 
+                    quizID="" 
+                    outputText={this.state.quizQuestionsText}/>
                 </div>
 
                 <div className="submit-answer">
-                    <SubmitAnswer handler={this.userResponseHandler.bind(this)} userID="" questionID="" quizID="" outputText={this.state.userResponseText}/>
+                    <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
+                    userID="" 
+                    questionID="" 
+                    quizID="" 
+                    outputText={this.state.userResponseText}/>
                 </div>
 
 
