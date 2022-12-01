@@ -55,7 +55,7 @@ export class QuestionText extends Component {
         return (
             <div className='questionText'>
                 <div>
-                    <span className="section-header"> Question Selector: </span>
+                    <span className="section-header"> Question Text: </span>
                 </div>
                 <div>
                    <span>QuestionID: {this.props.questionID}</span> 

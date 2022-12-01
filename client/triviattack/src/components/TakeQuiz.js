@@ -85,11 +85,11 @@ class TakeQuiz extends Component {
     render() {
         return (
             <div>
-                <span>Triviattack</span>
+                <span className='page-title'>Triviattack</span>
+
                 <div className="display-question">
                     <QuestionText handler={this.updateQuestionTextHandler.bind(this)} 
                     questionID={this.state.questionID} 
-
                     questionText={this.state.questionText}/>
                 </div>
 

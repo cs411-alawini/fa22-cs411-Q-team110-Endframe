@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+
+.delete-user-from-team, 
+.user-stats, 
+.team-members, 
+.team-stats, 
+.update-username, 
+.user-info,
+.display-question,
+.create-quiz,
+.question-list,
+.submit-answer {
+  /* display: flex; */
+  text-align: center;
+  background-color: rgb(61, 125, 165);
+  border-bottom: #282c34 solid 3px;
+  padding: 10px;
+
+  
+}
+
+.page-title {
+  font-size: 30px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+  background-color: rgb(36, 32, 40);
+  padding-bottom: 10px;
+  padding-top: 10px;
+  flex: auto;
+}
+
+.section-header {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+}

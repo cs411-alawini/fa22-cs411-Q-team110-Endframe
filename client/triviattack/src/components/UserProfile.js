@@ -84,13 +84,12 @@ class UserProfile extends Component {
     render() {
         return (
             <div>
-                <span>Triviattack</span>
+                <span className='page-title'>Triviattack</span>
                
 
                 <div className="delete-user-from-team">
                     <DeleteUserFromTeam handler={this.deleteUserFromTeamTextHandler.bind(this)} teamID="category" userID="difficulty" outputText={this.state.deleteUserText}/>
                 </div>
-
 
                 <div className="user-stats">
                     <UserStats handler={this.userStatsTextHandler.bind(this)} username="" outputText={this.state.statsText}/>

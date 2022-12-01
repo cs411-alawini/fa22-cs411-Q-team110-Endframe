@@ -100,7 +100,7 @@ class CreateQuiz extends Component {
         return (
             <div className='createQuiz'>
                 <div>
-                    <span className="section-header"> Create new Quiz: </span>
+                    <span className="section-header"> Create New Quiz: </span>
                 </div>
                 <div>
                    <span>New Quiz: {this.props.outputText}</span> 

@@ -54,7 +54,7 @@ class DeleteUserFromTeam extends Component {
         return (
             <div className='delete-user-from-team'>
                 <div>
-                    <span className="section-header"> Create new Quiz: </span>
+                    <span className="section-header"> Delete User From Team: </span>
                 </div>
                 <div>
                    <span>Deleted User/Team: {this.props.outputText}</span> 
