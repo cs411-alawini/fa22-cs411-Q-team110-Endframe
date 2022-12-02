@@ -45,4 +45,7 @@ testing script in /util/api_sql_calls_tester.py
    >> docker tag triviattack gcr.io/endframe/triviattack
    >> docker push gcr.io/endframe/triviattack
 
-Test CICD with random change
+## Stage 5
+### Accessing the deployed application:
+   Go to this URL:
+   https://triviattack-frontend-ebo6y2ojba-uc.a.run.app/
