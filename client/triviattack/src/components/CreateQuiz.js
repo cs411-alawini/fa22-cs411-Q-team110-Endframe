@@ -84,7 +84,10 @@ class CreateQuiz extends Component {
         for (let i = 0; i < num_questions - 1; i++) {
             qid_array.push(question_id_dict[i].question)
         }
+        let quiz_id = question_id_dict[num_questions-1].quizID
         console.log(qid_array);
+        this.props.updateQuestionListHandler(qid_array)
+        this.props.updateQuizIDHandler(quiz_id)
         // for (let i = 0; i < length(qid_array); i ++) {
             // testfunction(qid_array[0])
             // this.setState({questionID: qid_array[0]})
@@ -105,20 +108,6 @@ class CreateQuiz extends Component {
                 <div>
                    <span>New Quiz: {this.props.outputText}</span> 
                 </div>
-                {/* <div >
-                    <input
-                        className='category'
-                        type="text"
-                        value={this.state.category}
-                        onChange={(event) => this.updateCategoryValue(event)}
-                    />
-                    <input
-                        className='difficulty'
-                        type="text"
-                        value={this.state.difficulty}
-                        onChange={(event) => this.updateDifficultyValue(event)}
-                    />
-                </div> */}
                 <div >
                     <Select onChange={(event) => this.updateCategoryValue(event)}
                         placeholder = "Category"

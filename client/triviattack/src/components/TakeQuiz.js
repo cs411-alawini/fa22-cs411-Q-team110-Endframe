@@ -26,6 +26,7 @@ class TakeQuiz extends Component {
             userID:'',
             statsText:'',
             createQuizText:'',
+            questionList:[],
             teamID:'',
             deleteUserText:'',
             quizQuestionsText:'',
@@ -40,6 +41,14 @@ class TakeQuiz extends Component {
         this.scheme = config.baseScheme;
         this.base_url = config.baseURL;
         this.quiz_qs = ''
+    }
+
+
+    updateUserID(event){
+        this.setState({userID:event.target.value})
+    }
+    updateQuizID(id){
+        this.setState({quizID:id})
     }
 
     updateQuestionTextHandler(newQuestionText, newQuestionID) {
@@ -82,23 +91,45 @@ class TakeQuiz extends Component {
         this.setState({userResponseText: text});
     }
 
+    updateQuestionListHandler(questionIds){
+        this.setState({questionList:questionIds})
+    }
+
     render() {
         return (
             <div>
-                <span className='page-title'>Triviattack</span>
+                {/* <span className='page-title'>Triviattack</span> */}
 
-                <div className="display-question">
-                    <QuestionText handler={this.updateQuestionTextHandler.bind(this)} 
-                    questionID={this.state.questionID} 
-                    questionText={this.state.questionText}/>
+                <div>
+                    <span>User ID</span>
+                    <input
+                        className='teamID'
+                        type="text"
+                        value={this.state.userID}
+                        onChange={(event) => this.updateUserID(event)}
+                    />
                 </div>
+
 
                 <div className="create-quiz">
                     <CreateQuiz handler={this.updateCreateQuizTextHandler.bind(this)} 
+                    updateQuestionListHandler={this.updateQuestionListHandler.bind(this)}
+                    updateQuizIDHandler={this.updateQuizID.bind(this)}
                     category="category" 
                     difficulty="difficulty" 
                     outputText={this.state.createQuizText} />
                 </div>
+
+                <div className="display-question">
+                    <QuestionText handler={this.updateQuestionTextHandler.bind(this)} 
+                    questionID={this.state.questionID} 
+                    questionText={this.state.questionText}
+                    questionList={this.state.questionList}
+                    quizID={this.state.quizID}
+                    userID={this.state.userID}/>
+                </div>
+
+                
 
                 <div className="question-list">
                     <QuestionList handler={this.quizQuestionsTextHandler.bind(this)} 

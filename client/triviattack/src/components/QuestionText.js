@@ -2,6 +2,7 @@ import '../App.css';
 import React, {Component} from 'react';
 import config from '../config/config'
 import CreateQuiz, {qid_array} from './CreateQuiz';
+import SubmitAnswer from './SubmitAnswer';
 
 export class QuestionText extends Component {
 
@@ -11,10 +12,18 @@ export class QuestionText extends Component {
         this.state = {
 
             questionID: this.props.questionID,
-            questionText: this.props.questionText
+            questionText: this.props.questionText,
+            questionList: this.props.questionList,
+            quizID: this.props.quizID,
+            userID: this.props.userID,
+            userResponseText: ""
         }
         this.scheme = config.baseScheme;
         this.base_url = config.baseURL;
+    }
+
+    userResponseHandler(text) {
+        this.setState({userResponseText: text});
     }
 
     updateSearchValue(event) {
@@ -22,12 +31,14 @@ export class QuestionText extends Component {
         // this.setState({questionID: QUESTION_ID})
     }
 
-    searchForQuestionText(){
-          let endpoint = "/getQuestionText"
-          fetch(`${this.scheme}${this.base_url}${endpoint}?qid=${this.state.questionID}`, {
+    searchForQuestionText(questionID){
+        console.log("searching for question " + questionID)
+        let endpoint = "/getQuestionText"
+        let questionText = ""
+        fetch(`${this.scheme}${this.base_url}${endpoint}?qid=${questionID}`, {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
                 }
             })
             .then((resp) => {
@@ -37,9 +48,11 @@ export class QuestionText extends Component {
             })
             .then((text) => {
                 this.props.handler(text, this.state.questionID)
+                const responseObj = JSON.parse(text)
+                questionText = responseObj.Msg[0].questionText
             });
-
-          
+        
+        return questionText 
     }
 
     testfunction(newQuestionID){
@@ -52,6 +65,22 @@ export class QuestionText extends Component {
 
 
     render() {
+        console.log("render questions " + this.state.questionList)
+        const allQuestionTexts = this.state.questionList.map((item, index) => {
+                                return (
+                                <div>
+                                    <span key={index}>{this.searchForQuestionText(item)}</span>
+                                    <div className="submit-answer">
+                                        <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
+                                        userID={this.props.userID} 
+                                        questionID={item} 
+                                        quizID={this.props.quizID} 
+                                        outputText={this.state.userResponseText}/>
+                                    </div>
+                                </div>
+                                )
+                            }
+                           );
         return (
             <div className='questionText'>
                 <div>
@@ -61,14 +90,14 @@ export class QuestionText extends Component {
                    <span>QuestionID: {this.props.questionID}</span> 
                 </div>
                 <div>
-                   <span>Question Text: {this.props.questionText}</span> 
+                    {allQuestionTexts}
                 </div>
                 <input
                     type="text"
                     value={this.state.searchValue}
                     onChange={(event) => this.updateSearchValue(event)}
                 />
-                <button onClick={() => this.searchForQuestionText()}>
+                <button onClick={() => this.searchForQuestionText("20")}>
                     Submit
                 </button>
             </div>
