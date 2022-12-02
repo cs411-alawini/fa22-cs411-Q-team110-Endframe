@@ -11,6 +11,8 @@ import TeamStats from './TeamStats';
 import UpdateUsername from './UpdateUsername';
 import UserInfo from './UserInfo';
 import SubmitAnswer from './SubmitAnswer';
+import JoinTeam from './JoinTeam';
+import GetTeam from './GetTeam';
 
 
 class UserProfile extends Component {
@@ -33,7 +35,9 @@ class UserProfile extends Component {
             teamStatsText:'',
             userInfoText:'',
             updateUserText:'',
-            userResponseText:''
+            userResponseText:'',
+            joinTeamText:'',
+            getTeamText:''
 
 
         }
@@ -51,6 +55,14 @@ class UserProfile extends Component {
 
     deleteUserFromTeamTextHandler(text) {
         this.setState({deleteUserText: text});
+    }
+
+    joinTeamTextHandler(text) {
+        this.setState({joinTeamText: text});
+    }
+
+    getTeamTextHandler(text) {
+        this.setState({getTeamText: text});
     }
 
     quizQuestionsTextHandler(text) {
@@ -86,9 +98,16 @@ class UserProfile extends Component {
             <div>
                 <span className='page-title'>Triviattack</span>
                
+                <div className="join-team">
+                    <JoinTeam handler={this.joinTeamTextHandler.bind(this)} teamID="" userID="" outputText={this.state.joinTeamText}/>
+                </div>
+
+                <div className="get-team">
+                    <GetTeam handler={this.getTeamTextHandler.bind(this)} teamID=""  outputText={this.state.getTeamText}/>
+                </div>
 
                 <div className="delete-user-from-team">
-                    <DeleteUserFromTeam handler={this.deleteUserFromTeamTextHandler.bind(this)} teamID="category" userID="difficulty" outputText={this.state.deleteUserText}/>
+                    <DeleteUserFromTeam handler={this.deleteUserFromTeamTextHandler.bind(this)} teamID="" userID="" outputText={this.state.deleteUserText}/>
                 </div>
 
                 <div className="user-stats">

@@ -46,7 +46,9 @@
 .display-question,
 .create-quiz,
 .question-list,
-.submit-answer {
+.submit-answer,
+.join-team,
+.get-team {
   /* display: flex; */
   text-align: center;
   background-color: rgb(61, 125, 165);
