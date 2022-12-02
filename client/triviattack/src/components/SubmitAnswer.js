@@ -68,6 +68,11 @@ class SubmitAnswer extends Component {
           
     }
 
+
+    getNextQuestion() {
+        this.props.question_index = this.props.question_index + 1
+    }
+
     componentDidMount() {
         this.setState({outputText: this.props.outputText})
     }
@@ -121,7 +126,10 @@ class SubmitAnswer extends Component {
                     </div>
                 </div>
                 <button onClick={() => this.submitAnswer()}>
-                    Submit
+                    Submit Response
+                </button>
+                <button onClick={() => this.props.questionIndexHandler()}>
+                    Next Question
                 </button>
             </div>
         );

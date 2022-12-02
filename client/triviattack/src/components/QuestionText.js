@@ -17,12 +17,17 @@ export class QuestionText extends Component {
             quizID: this.props.quizID,
             userID: this.props.userID,
             userResponseText: "",
-            allQuestionTexts: <div></div>
+            allQuestionTexts: <div></div>,
+            questionIndex: 0,
+            questionTextArray: []
         }
         this.scheme = config.baseScheme;
         this.base_url = config.baseURL;
+        
     }
-
+    updateQuestionIndex(event){
+        this.setState({questionIndex:this.state.questionIndex+1})
+    }
     userResponseHandler(text) {
         this.setState({userResponseText: text});
     }
@@ -44,16 +49,19 @@ export class QuestionText extends Component {
             })
             .then((resp) => {
                 if(resp.ok){
+                    let text 
                     return resp.text()
                 }
             })
             .then((text) => {
-                this.props.handler(text, this.state.questionID)
+                // this.props.handler(text, questionID)
                 const responseObj = JSON.parse(text)
-                this.state.questionText = responseObj.Msg[0].questionText
-                console.log(questionText)
-            });
-        
+                this.setState({questionText:responseObj.Msg[0].questionText})
+                console.log(this.state.questionText)
+                return this.state.questionText
+            }
+            );
+          //  return this.state.questionText
         
     }
 
@@ -62,28 +70,66 @@ export class QuestionText extends Component {
     }
 
     componentDidMount() {
+        
         this.setState({questionText: this.props.questionText})
     }
 
     componentDidUpdate() {
-        // do something
-        this.state.allQuestionTexts = this.props.questionList.map((item, index) => {
-            let qText = this.searchForQuestionText(item)
-            return (
-            <div>
-                <span key={item}>{qText}</span>
-                <div className="submit-answer">
-                    <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
-                    userID={this.props.userID} 
-                    questionID={item} 
-                    quizID={this.props.quizID} 
-                    outputText={this.state.userResponseText}/>
-                </div>
-            </div>
-            )
+
+        let qText = ""
+        let qarray = []
+        for (let i = 0; i < 10; i++ ){
+            qText = this.searchForQuestionText(this.state.questionList[i])
+            qarray.push(qText)
+            // this.setState({questionTextArray: [...this.state.questionTextArray, qText]})
         }
-       );
+
+        console.log(qarray)
+        // do something
+        // let qtext_array = []
+        // for (let i = 0; i < 10; i++) {
+        //     qtext_array.push(this.searchForQuestionText(this.props.questionList[i]))
+        // }
+        // console.log(qtext_array)
+        
+    //     this.state.allQuestionTexts = this.props.questionList.map((item, index) => {
+    //         let qText = this.searchForQuestionText(item)
+    //         return (
+    //         <div>
+    //             <span key={item}>{qText}</span>
+    //             <div className="submit-answer">
+    //                 <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
+    //                 userID={this.props.userID} 
+    //                 questionID={item} 
+    //                 quizID={this.props.quizID} 
+    //                 outputText={this.state.userResponseText}/>
+    //             </div>
+    //         </div>
+    //         )
+    //     }
+    //    );
+    // for (let i = 0; i < 10; i++) {
+        console.log(this.state.questionIndex)
+        console.log(this.props.questionList)
+        let item = qarray[this.state.questionIndex]
+       // let qText = this.searchForQuestionText(item)
+    //    console.log(this.state.questionTextArray)
+        console.log(this.state.questionText)
+        this.state.allQuestionTexts = //return (
+        <div>
+            <span key={item}>{this.state.questionText}</span>
+            <div className="submit-answer">
+                <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
+                userID={this.props.userID} 
+                questionID={item} 
+                quizID={this.props.quizID}
+                questionIndexHandler={this.updateQuestionIndex.bind(this)} 
+                outputText={this.state.userResponseText}/>
+            </div>
+         </div>
+
       }
+      
 
 
     render() {
@@ -104,9 +150,9 @@ export class QuestionText extends Component {
                     value={this.state.searchValue}
                     onChange={(event) => this.updateSearchValue(event)}
                 />
-                <button onClick={() => this.searchForQuestionText("20")}>
-                    Submit
-                </button>
+                {/* <button onClick={() => this.searchForQuestionText("20")}>
+                    Test Button
+                </button> */}
             </div>
         );
     }

@@ -34,16 +34,19 @@ class TakeQuiz extends Component {
             teamStatsText:'',
             userInfoText:'',
             updateUserText:'',
-            userResponseText:''
-
+            userResponseText:'',
+          //  questionIndex: 0
 
         }
         this.scheme = config.baseScheme;
         this.base_url = config.baseURL;
         this.quiz_qs = ''
+      //  this.question_index = 0
     }
 
-
+    // updateQuestionIndex(event){
+    //     this.setState({questionIndex:this.state.questionIndex+1})
+    // }
     updateUserID(event){
         this.setState({userID:event.target.value})
     }
@@ -125,6 +128,7 @@ class TakeQuiz extends Component {
                     questionID={this.state.questionID} 
                     questionText={this.state.questionText}
                     questionList={this.state.questionList}
+                 //   questionIndexHandler={this.updateQuestionIndex.bind(this)}
                     quizID={this.state.quizID}
                     userID={this.state.userID}/>
                 </div>
