@@ -74,7 +74,10 @@ export class QuestionText extends Component {
         this.setState({questionText: this.props.questionText})
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(previousProps) {
+        if (previousProps.data !== this.props.data) {
+            this.setState({/*....*/})
+        }
 
         let qText = ""
         let qarray = []
@@ -111,7 +114,7 @@ export class QuestionText extends Component {
     // for (let i = 0; i < 10; i++) {
         console.log(this.state.questionIndex)
         console.log(this.props.questionList)
-        let item = qarray[this.state.questionIndex]
+        let item = this.state.questionTextArray[this.state.questionIndex]
        // let qText = this.searchForQuestionText(item)
     //    console.log(this.state.questionTextArray)
         console.log(this.state.questionText)

@@ -48,7 +48,8 @@
 .question-list,
 .submit-answer,
 .join-team,
-.get-team {
+.get-team,
+.get-competition-team {
   /* display: flex; */
   text-align: center;
   background-color: rgb(61, 125, 165);

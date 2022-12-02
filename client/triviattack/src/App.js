@@ -93,6 +93,7 @@ userResponseHandler(text) {
       <Navbar />
       <Routes>
           {/* <Route exact path='/' exact element={<Home />} /> */}
+          <Route exact path='/' element={<Home/>} />
           <Route path='/home' element={<Home/>} />
           <Route path='/user-profile' element={<UserProfile />} />
           <Route path='/take-quiz' element={<TakeQuiz />} />

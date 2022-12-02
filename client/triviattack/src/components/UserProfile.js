@@ -13,6 +13,7 @@ import UserInfo from './UserInfo';
 import SubmitAnswer from './SubmitAnswer';
 import JoinTeam from './JoinTeam';
 import GetTeam from './GetTeam';
+import GetCompetitionTeam from './GetCompetitionTeam';
 
 
 class UserProfile extends Component {
@@ -37,7 +38,8 @@ class UserProfile extends Component {
             updateUserText:'',
             userResponseText:'',
             joinTeamText:'',
-            getTeamText:''
+            getTeamText:'',
+            getCompTeamText:''
 
 
         }
@@ -47,6 +49,9 @@ class UserProfile extends Component {
 
     updateQuestionTextHandler(newQuestionText, newQuestionID) {
         this.setState({questionText: newQuestionText, questionID:newQuestionID});
+    }
+    updateCompTeamTextHandler(compTeam) {
+        this.setState({ getCompTeamText: compTeam});
     }
 
     updateCreateQuizTextHandler(text) {
@@ -128,6 +133,10 @@ class UserProfile extends Component {
 
                 <div className="user-info">
                     <UserInfo handler={this.userInfoHandler.bind(this)} userID="" outputText={this.state.userInfoText}/>
+                </div>
+
+                <div className="get-comp-team">
+                    <GetCompetitionTeam handler={this.updateCompTeamTextHandler.bind(this)} userID="" outputText={this.state.getCompTeamText}/>
                 </div>
 
 
