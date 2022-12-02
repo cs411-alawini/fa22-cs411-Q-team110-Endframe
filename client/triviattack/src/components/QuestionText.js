@@ -16,7 +16,8 @@ export class QuestionText extends Component {
             questionList: this.props.questionList,
             quizID: this.props.quizID,
             userID: this.props.userID,
-            userResponseText: ""
+            userResponseText: "",
+            allQuestionTexts: <div></div>
         }
         this.scheme = config.baseScheme;
         this.base_url = config.baseURL;
@@ -49,10 +50,11 @@ export class QuestionText extends Component {
             .then((text) => {
                 this.props.handler(text, this.state.questionID)
                 const responseObj = JSON.parse(text)
-                questionText = responseObj.Msg[0].questionText
+                this.state.questionText = responseObj.Msg[0].questionText
+                console.log(questionText)
             });
         
-        return questionText 
+        
     }
 
     testfunction(newQuestionID){
@@ -63,24 +65,29 @@ export class QuestionText extends Component {
         this.setState({questionText: this.props.questionText})
     }
 
+    componentDidUpdate() {
+        // do something
+        this.state.allQuestionTexts = this.props.questionList.map((item, index) => {
+            let qText = this.searchForQuestionText(item)
+            return (
+            <div>
+                <span key={item}>{qText}</span>
+                <div className="submit-answer">
+                    <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
+                    userID={this.props.userID} 
+                    questionID={item} 
+                    quizID={this.props.quizID} 
+                    outputText={this.state.userResponseText}/>
+                </div>
+            </div>
+            )
+        }
+       );
+      }
+
 
     render() {
-        console.log("render questions " + this.state.questionList)
-        const allQuestionTexts = this.state.questionList.map((item, index) => {
-                                return (
-                                <div>
-                                    <span key={index}>{this.searchForQuestionText(item)}</span>
-                                    <div className="submit-answer">
-                                        <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
-                                        userID={this.props.userID} 
-                                        questionID={item} 
-                                        quizID={this.props.quizID} 
-                                        outputText={this.state.userResponseText}/>
-                                    </div>
-                                </div>
-                                )
-                            }
-                           );
+        console.log("render questions " + this.props.questionList)
         return (
             <div className='questionText'>
                 <div>
@@ -90,7 +97,7 @@ export class QuestionText extends Component {
                    <span>QuestionID: {this.props.questionID}</span> 
                 </div>
                 <div>
-                    {allQuestionTexts}
+                    {this.state.allQuestionTexts}
                 </div>
                 <input
                     type="text"

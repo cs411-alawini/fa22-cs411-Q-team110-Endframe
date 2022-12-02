@@ -33,11 +33,11 @@ class CreateQuiz extends Component {
             category: '',
             difficulty: '',
             questionID: '',
+            question_list: '',
             outputText: this.props.outputText
         }
         this.scheme = config.baseScheme;
         this.base_url = config.baseURL;
-        this.question_list = '';
     }
 
     updateCategoryValue(event) {
@@ -62,7 +62,7 @@ class CreateQuiz extends Component {
                 }
             })
             .then((text) => {
-                this.question_list = text;
+                this.state.question_list = text;
                 // console.log(this.question_list)
                 this.readQuestions();
                 this.props.handler(text)
@@ -77,7 +77,7 @@ class CreateQuiz extends Component {
 
     readQuestions() { 
         // var questions_json = JSON.stringify(this.question_list);
-        var parsed_questions = JSON.parse(this.question_list);
+        var parsed_questions = JSON.parse(this.state.question_list);
         var question_id_dict = parsed_questions.Msg;
         var num_questions = Object.keys(question_id_dict).length
         var qid_array = []
