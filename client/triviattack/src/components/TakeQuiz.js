@@ -133,14 +133,6 @@ class TakeQuiz extends Component {
                     userID={this.state.userID}/>
                 </div>
 
-                
-
-                <div className="question-list">
-                    <QuestionList handler={this.quizQuestionsTextHandler.bind(this)} 
-                    quizID="" 
-                    outputText={this.state.quizQuestionsText}/>
-                </div>
-
                 <div className="submit-answer">
                     <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
                     userID="" 
@@ -149,7 +141,11 @@ class TakeQuiz extends Component {
                     outputText={this.state.userResponseText}/>
                 </div>
 
-
+                <div className="question-list">
+                    <QuestionList handler={this.quizQuestionsTextHandler.bind(this)} 
+                    quizID="" 
+                    outputText={this.state.quizQuestionsText}/>
+                </div>
             
             </div>
         );
