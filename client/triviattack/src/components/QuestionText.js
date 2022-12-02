@@ -34,25 +34,25 @@ export class QuestionText extends Component {
 
     searchForQuestionText(questionID){
         console.log("searching for question " + questionID)
-        let endpoint = "/getQuestionText"
-        let questionText = ""
-        fetch(`${this.scheme}${this.base_url}${endpoint}?qid=${questionID}`, {
-                method: 'GET',
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            })
-            .then((resp) => {
-                if(resp.ok){
-                    return resp.text()
-                }
-            })
-            .then((text) => {
-                this.props.handler(text, this.state.questionID)
-                const responseObj = JSON.parse(text)
-                this.state.questionText = responseObj.Msg[0].questionText
-                console.log(questionText)
-            });
+        // let endpoint = "/getQuestionText"
+        // let questionText = ""
+        // fetch(`${this.scheme}${this.base_url}${endpoint}?qid=${questionID}`, {
+        //         method: 'GET',
+        //         headers: {
+        //         'Content-Type': 'application/json'
+        //         }
+        //     })
+        //     .then((resp) => {
+        //         if(resp.ok){
+        //             return resp.text()
+        //         }
+        //     })
+        //     .then((text) => {
+        //         this.props.handler(text, this.state.questionID)
+        //         const responseObj = JSON.parse(text)
+        //         this.state.questionText = responseObj.Msg[0].questionText
+        //         console.log(questionText)
+        //     });
         
         
     }
@@ -68,10 +68,29 @@ export class QuestionText extends Component {
     componentDidUpdate() {
         // do something
         this.state.allQuestionTexts = this.props.questionList.map((item, index) => {
-            let qText = this.searchForQuestionText(item)
+            let qText = ""
+            let endpoint = "/getQuestionText"
+            let questionText = ""
+            fetch(`${this.scheme}${this.base_url}${endpoint}?qid=${item}`, {
+                    method: 'GET',
+                    headers: {
+                    'Content-Type': 'application/json'
+                    }
+                })
+                .then((resp) => {
+                    if(resp.ok){
+                        return resp.text()
+                    }
+                })
+                .then((text) => {
+                    this.props.handler(text, this.state.questionID)
+                    const responseObj = JSON.parse(text)
+                    questionText = responseObj.Msg[0].questionText
+                    console.log(questionText)
+                });
             return (
             <div>
-                <span key={item}>{qText}</span>
+                <span key={item}>{questionText}</span>
                 <div className="submit-answer">
                     <SubmitAnswer handler={this.userResponseHandler.bind(this)} 
                     userID={this.props.userID} 
