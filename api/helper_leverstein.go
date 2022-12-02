@@ -2,10 +2,6 @@ package main
 
 import "unicode/utf8"
 
-/**
-Credit goes to https://github.com/kmaher9/levenshtein/blob/master/levenshtein.go
-for developing the original versions of these functions
-**/
 func computeLevenshteinValue(a, b string) int {
 	f := make([]int, utf8.RuneCountInString(b)+1)
 

@@ -23,9 +23,9 @@ func connectWithConnector() (*sql.DB, error) {
 		dbName = "triviattack"      // e.g. 'my-database'
 		// instanceConnectionName = "endframe:us-central1:endframe-data" // e.g. 'project:region:instance'
 		// usePrivate
-		dbPort = "3306"
-		dbHost = "34.69.102.226"
-		// unixSocketPath = "/cloudsql/endframe:us-central1:endframe-data"
+		// dbPort = "3306"
+		// dbHost = "34.69.102.226"
+		unixSocketPath = "/cloudsql/endframe:us-central1:endframe-data"
 	)
 
 	// d, err := cloudsqlconn.NewDialer(context.Background())
@@ -40,11 +40,11 @@ func connectWithConnector() (*sql.DB, error) {
 	// 		return d.Dial(ctx, instanceConnectionName)
 	// 	})
 
-	dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
-		dbUser, dbPwd, dbHost, dbPort, dbName)
+	// dbURI := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
+	// 	dbUser, dbPwd, dbHost, dbPort, dbName)
 
-	// dbURI := fmt.Sprintf("%s:%s@unix(/%s)/%s?parseTime=true",
-	// 	dbUser, dbPwd, unixSocketPath, dbName)
+	dbURI := fmt.Sprintf("%s:%s@unix(/%s)/%s?parseTime=true",
+		dbUser, dbPwd, unixSocketPath, dbName)
 	dbPool, err := sql.Open("mysql", dbURI)
 	if err != nil {
 		return nil, fmt.Errorf("sql.Open: %v", err)

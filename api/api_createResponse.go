@@ -106,8 +106,9 @@ func createResponse(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dist := computeLevenshteinPercentage(answers[0], userResponse)
+	errRate := computeLevenshteinValue(answers[0], userResponse)
 	var isCorrect bool
-	if dist > 90 {
+	if dist > 90 || errRate < 2 {
 		isCorrect = true
 	} else {
 		isCorrect = false
