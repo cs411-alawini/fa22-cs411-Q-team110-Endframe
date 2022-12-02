@@ -128,9 +128,6 @@ class SubmitAnswer extends Component {
                 <button onClick={() => this.submitAnswer()}>
                     Submit Response
                 </button>
-                <button onClick={() => this.props.questionIndexHandler()}>
-                    Next Question
-                </button>
             </div>
         );
     }
